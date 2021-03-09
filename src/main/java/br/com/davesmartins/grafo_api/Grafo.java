@@ -387,4 +387,15 @@ public class Grafo {
         return aresta;
     }
 
+    public ArrayList<Aresta> ordenarAresta() {
+        ArrayList<Aresta> arestas = new ArrayList<Aresta>();
+        ArrayList<Aresta> listaArestas = new ArrayList<Aresta>();
+        listaArestas.addAll(getLista_aresta());
+        for (int i = 0; i < getLista_aresta().size(); i++) {
+            arestas.add(menoresArestas(listaArestas));
+            listaArestas.remove(menoresArestas(listaArestas));
+        }
+        return arestas;
+    }
+
 }
