@@ -398,4 +398,47 @@ public class Grafo {
         return arestas;
     }
 
+    public ArrayList<Aresta> kruskal() {
+        ArrayList<Aresta> A = new ArrayList<Aresta>();
+        A.addAll(ordenarAresta());
+        int n = this.getLista_vertice().size();
+        ArrayList<Aresta> arvore = new ArrayList<Aresta>();
+
+        int a = 1;
+        for (int b = 0; b < getLista_vertice().size(); b++) {
+            getLista_vertice().get(b).setGrupo(a);
+            a++;
+        }
+
+        int i = 0;
+        int comp_u;
+        int comp_v;
+        while ((arvore.size() < (n - 1)) && (!A.isEmpty())) {
+            Vertice u = A.get(i).getV1();
+            Vertice v = A.get(i).getV2();
+
+            comp_u = u.getGrupo();   //grupo 1
+            comp_v = v.getGrupo();   //grupo 2
+
+            if (comp_u != comp_v) {
+                v.setGrupo(comp_u);
+                u.setGrupo(comp_u);
+                arvore.add(new Aresta(u, v, A.get(i).getDistancia()));
+            }
+            i++;
+        }
+        return arvore;
+    }
+
+    public String imprimeArvore() {
+        String arvore = "graph {\n";
+        for (Aresta a : kruskal()) {
+            if (a != null) {
+                arvore += " " + a.getV1().getNome() + " -- "
+                        + a.getV2().getNome() + "[label = \"" + a.getDistancia() + "\"];\n";
+            }
+        }
+        return arvore + "}";
+    }
+
 }

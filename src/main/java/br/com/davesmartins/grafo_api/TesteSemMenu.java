@@ -36,5 +36,6 @@ public class TesteSemMenu {
         grafo.addAresta(a4);
         grafo.addAresta(a5);
         
+        Graph.createStringDotToPng(grafo.imprimeArvore(), "Arvorekruskal.png");
     }
 }

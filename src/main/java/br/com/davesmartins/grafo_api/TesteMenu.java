@@ -213,7 +213,7 @@ public class TesteMenu {
                         System.out.println("10 -Mostrar conexidade");
                         System.out.println("11 -Gerar menor caminho (orientado)");
                         System.out.println("12 -Gerar menor caminho (nao orientado)");
-                        //System.out.println("13 -Gerar imagem da arvore (Kruskal)"); //fazer ainda
+                        System.out.println("13 -Gerar imagem da arvore (Kruskal)"); 
                         System.out.println("14 - Sair");
                         op3 = leitor.nextInt();
 
@@ -288,8 +288,10 @@ public class TesteMenu {
                                 System.out.println(grafo.Dijikstra(grafo.buscaVertice(v1), grafo.buscaVertice(v2)));
                                 Graph.createStringDotToPng(grafo.Dijikstra(grafo.buscaVertice(v1), grafo.buscaVertice(v2)), "naoOrientadoDistancia.png");
                                 break;
-                                
 
+                            case 13:
+                                Graph.createStringDotToPng(grafo.imprimeArvore(), "Arvorekruskal.png");
+                                break;
 
                         }
                     }
