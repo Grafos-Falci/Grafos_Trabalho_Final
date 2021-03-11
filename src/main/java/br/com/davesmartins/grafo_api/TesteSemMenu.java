@@ -65,8 +65,8 @@ public class TesteSemMenu {
         grafo.addAresta(a14);
         grafo.addAresta(a15);
         
-        
+        Graph.createStringDotToPng(grafo.dotOrientado(), "antes.png");
         grafo.malgrange();
-        Graph.createStringDotToPng(grafo.dotOrientado(), "final.png");
+        Graph.createStringDotToPng(grafo.dotOrientado(), "depoisRemove.png");
     }
 }

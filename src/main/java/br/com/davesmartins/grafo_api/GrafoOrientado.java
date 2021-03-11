@@ -169,21 +169,19 @@ public class GrafoOrientado extends Grafo {
 
     public void malgrange() throws IOException {
         ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
-        ArrayList<Vertice> temporario = new ArrayList<Vertice>();
+        ArrayList<Vertice> copia = new ArrayList<Vertice>();
 
+        copia.addAll(lista_vertice);
         int contador = 0;
-        for (int i = 0; i <= lista_vertice.size(); i++) {
-            if (contador != 0) {
-                for (Vertice vert : intersecao) {
-                    System.out.println("lista intersecao = " + vert.getNome());
-                }
+
+        for (Vertice v : copia) {
+            if (!intersecao.isEmpty()) {
                 recriaVertices(intersecao);
                 intersecao.removeAll(intersecao);
-                System.out.println("tamanho = " + lista_vertice.size());
             }
             contador++;
-            for (Vertice ftd : buscaTD(lista_vertice.get(i))) {
-                for (Vertice fti : buscaTI(lista_vertice.get(i))) {
+            for (Vertice ftd : buscaTD(v)) {
+                for (Vertice fti : buscaTI(v)) {
                     if (fti.equals(ftd)) {
                         if (!intersecao.contains(fti)) {
                             intersecao.add(fti);
@@ -195,32 +193,37 @@ public class GrafoOrientado extends Grafo {
         }
 
         System.out.println(intersecao.size());
+        
     }
+    int cont = 1;
 
     public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) throws IOException {
-        int cont = 1;
-        
-        
-        Vertice vertice = new Vertice("" + cont);
+
+        ArrayList<Aresta> copia = new ArrayList<Aresta>();
+        copia.addAll(lista_aresta);
+
+        Vertice vertice = new Vertice("novo" + cont);
         addVertice(vertice);
-        cont++;
         System.out.println("cont = " + cont);
+        cont++;
 
         for (Vertice v : intersecao) {
-            for (Aresta a : lista_aresta) {
+            for (Aresta a : copia) {
+
                 if (a.getV1() == v) {
                     a.setV1(vertice);
                 }
                 if (a.getV2() == v) {
                     a.setV2(vertice);
                 }
+                if (a.getV1() == a.getV2()) {
+                    removeAresta(a);
+                }
+
             }
-            Graph.createStringDotToPng(dotOrientado(), "antes.png");
             lista_vertice.remove(v);
-            Graph.createStringDotToPng(dotOrientado(), "depois.png");
             System.out.println("remove" + lista_vertice.size());
         }
         return lista_vertice;
     }
-
 }
