@@ -1,5 +1,7 @@
 package br.com.davesmartins.grafo_api;
 
+import br.com.davesmartins.api.Graph;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -163,6 +165,62 @@ public class GrafoOrientado extends Grafo {
 
         dot = dot + "}";
         return dot;
+    }
+
+    public void malgrange() throws IOException {
+        ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
+        ArrayList<Vertice> temporario = new ArrayList<Vertice>();
+
+        int contador = 0;
+        for (int i = 0; i <= lista_vertice.size(); i++) {
+            if (contador != 0) {
+                for (Vertice vert : intersecao) {
+                    System.out.println("lista intersecao = " + vert.getNome());
+                }
+                recriaVertices(intersecao);
+                intersecao.removeAll(intersecao);
+                System.out.println("tamanho = " + lista_vertice.size());
+            }
+            contador++;
+            for (Vertice ftd : buscaTD(lista_vertice.get(i))) {
+                for (Vertice fti : buscaTI(lista_vertice.get(i))) {
+                    if (fti.equals(ftd)) {
+                        if (!intersecao.contains(fti)) {
+                            intersecao.add(fti);
+                            System.out.println(fti.getNome());
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println(intersecao.size());
+    }
+
+    public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) throws IOException {
+        int cont = 1;
+        
+        
+        Vertice vertice = new Vertice("" + cont);
+        addVertice(vertice);
+        cont++;
+        System.out.println("cont = " + cont);
+
+        for (Vertice v : intersecao) {
+            for (Aresta a : lista_aresta) {
+                if (a.getV1() == v) {
+                    a.setV1(vertice);
+                }
+                if (a.getV2() == v) {
+                    a.setV2(vertice);
+                }
+            }
+            Graph.createStringDotToPng(dotOrientado(), "antes.png");
+            lista_vertice.remove(v);
+            Graph.createStringDotToPng(dotOrientado(), "depois.png");
+            System.out.println("remove" + lista_vertice.size());
+        }
+        return lista_vertice;
     }
 
 }
