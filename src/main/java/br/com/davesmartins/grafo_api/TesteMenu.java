@@ -8,7 +8,7 @@ public class TesteMenu {
 
     public static void main(String[] args) throws IOException {
         Grafo grafo = new Grafo();
-        GrafoOrientado grafo_orientado = new GrafoOrientado();
+        GrafoOrientado grafoOrientado = new GrafoOrientado();
 
         Scanner leitor = new Scanner(System.in);
 
@@ -103,7 +103,7 @@ public class TesteMenu {
                                             System.out.println("Vertice: ");
                                             v1 = leitor.next();
                                             vert1 = new Vertice(v1);
-                                            grafo_orientado.addVertice(vert1);
+                                            grafoOrientado.addVertice(vert1);
                                             break;
                                         case 2:
                                             System.out.println("Vertice de origem: ");
@@ -113,7 +113,7 @@ public class TesteMenu {
                                             System.out.println("Vertice de destino: ");
                                             v2 = leitor.next();
                                             vert2 = new Vertice(v2);
-                                            grafo_orientado.inserirAresta(v1, v2);
+                                            grafoOrientado.inserirAresta(v1, v2);
                                             break;
                                         case 3:
                                             System.out.println("Vertice 1: ");
@@ -126,7 +126,7 @@ public class TesteMenu {
 
                                             System.out.println("Insira o valor da Aresta: ");
                                             valor = leitor.nextDouble();
-                                            grafo_orientado.inserirArestaValorada(v1, v2, valor);
+                                            grafoOrientado.inserirArestaValorada(v1, v2, valor);
                                             break;
                                     }
 
@@ -199,7 +199,7 @@ public class TesteMenu {
 
                 case 3:
                     int op3 = 0;
-                    while (op != 14) {
+                    while (op != 15) {
                         System.out.println("---------------Matriz---------------");
                         System.out.println("1 - Mostrar Ordem");
                         System.out.println("2 - Mostrar Grau");
@@ -210,11 +210,12 @@ public class TesteMenu {
                         System.out.println("7 - Grafo Completo?");
                         System.out.println("8 - Mostrar Fecho Transitivo Direto");
                         System.out.println("9 - Mostrar Fecho Transitivo Inverso");
-                        System.out.println("10 -Mostrar conexidade");
-                        System.out.println("11 -Gerar menor caminho (orientado)");
-                        System.out.println("12 -Gerar menor caminho (nao orientado)");
-                        System.out.println("13 -Gerar imagem da arvore (Kruskal)"); 
-                        System.out.println("14 - Sair");
+                        System.out.println("10 - Mostrar conexidade");
+                        System.out.println("11 - Gerar menor caminho (orientado)");
+                        System.out.println("12 - Gerar menor caminho (nao orientado)");
+                        System.out.println("13 - Gerar imagem da arvore (Kruskal)");
+                        System.out.println("14 - Gerar Grafo reduzido (malgrange)");
+                        System.out.println("15 - Sair");
                         op3 = leitor.nextInt();
 
                         switch (op3) {
@@ -233,7 +234,7 @@ public class TesteMenu {
                                 System.out.println(grafo.dotSimples());
                                 break;
                             case 5:
-                                System.out.println(grafo_orientado.dotOrientado());
+                                System.out.println(grafoOrientado.dotOrientado());
                                 break;
                             case 6:
                                 if (grafo.grafoRegular()) {
@@ -243,7 +244,7 @@ public class TesteMenu {
                                 }
                                 break;
                             case 7:
-                                if (grafo_orientado.Grafo_completo()) {
+                                if (grafoOrientado.Grafo_completo()) {
                                     System.out.println("Completo");
                                 } else {
                                     System.out.println("Nao Completo");
@@ -253,15 +254,15 @@ public class TesteMenu {
                                 System.out.println("Fecho Transitivo Direto(Informe o Vertice): ");
                                 v1 = leitor.next();
                                 Vertice vertice_ftd = new Vertice(v1);
-                                grafo_orientado.buscaTD(vertice_ftd);
+                                grafoOrientado.buscaTD(vertice_ftd);
                                 break;
                             case 9:
                                 System.out.println("Fecho Transitivo Inverso(Informe o Vertice): ");
                                 v1 = leitor.next();
-                                grafo_orientado.buscaTD(grafo_orientado.buscaVertice(v1));
+                                grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1));
                                 break;
                             case 10:
-                                if (grafo_orientado.grafoConexo()) {
+                                if (grafoOrientado.grafoConexo()) {
                                     System.out.println("Conexo");
                                 } else {
                                     System.out.println("Nao Conexo");
@@ -274,8 +275,8 @@ public class TesteMenu {
                                 System.out.println("Informe o vertice de destino");
                                 v2 = leitor.next();
 
-                                System.out.println(grafo_orientado.Dijikstra(grafo_orientado.buscaVertice(v1), grafo_orientado.buscaVertice(v2)));
-                                Graph.createStringDotToPng(grafo_orientado.Dijikstra(grafo_orientado.buscaVertice(v1), grafo_orientado.buscaVertice(v2)), "naoOrientadoDistancia.png");
+                                System.out.println(grafoOrientado.Dijikstra(grafoOrientado.buscaVertice(v1), grafoOrientado.buscaVertice(v2)));
+                                Graph.createStringDotToPng(grafoOrientado.Dijikstra(grafoOrientado.buscaVertice(v1), grafoOrientado.buscaVertice(v2)), "naoOrientadoDistancia.png");
                                 break;
 
                             case 12:
@@ -291,6 +292,11 @@ public class TesteMenu {
 
                             case 13:
                                 Graph.createStringDotToPng(grafo.imprimeArvore(), "Arvorekruskal.png");
+                                break;
+                                
+                            case 14:
+                                grafoOrientado.malgrange();
+                                Graph.createStringDotToPng(grafoOrientado.dotOrientado(), "grafoReduzido.png");
                                 break;
 
                         }

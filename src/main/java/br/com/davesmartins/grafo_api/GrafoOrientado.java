@@ -38,6 +38,16 @@ public class GrafoOrientado extends Grafo {
         return aresta;
     }
 
+    public ArrayList<Aresta> buscaArestasVertice(Vertice v) { //busca as arestas ligadas ao vertice 2
+        ArrayList<Aresta> aresta = new ArrayList<Aresta>();
+        for (Aresta a : lista_aresta) {
+            if (a.getV1() == v || a.getV2() == v) {
+                aresta.add(a);
+            }
+        }
+        return aresta;
+    }
+
     public ArrayList<Vertice> transitivoDireto(Vertice v) { //
         controle_vertice.add(v);
         ArrayList<Vertice> vertice = new ArrayList<Vertice>();
@@ -51,14 +61,14 @@ public class GrafoOrientado extends Grafo {
         return vertice;
     }
 
-    public ArrayList<Vertice> transitivoIndireto(Vertice v) {
+    public ArrayList<Vertice> transitivoInverso(Vertice v) {
         controle_vertice.add(v);
         ArrayList<Vertice> vertice = new ArrayList<Vertice>();
         ArrayList<Aresta> aresta = buscaV2(v);
         for (Aresta a : aresta) {
             vertice.add(a.getV1());
             if (!(controle_vertice.contains(a.getV1()))) {
-                vertice.addAll(transitivoIndireto(a.getV1()));
+                vertice.addAll(transitivoInverso(a.getV1()));
             }
         }
         return vertice;
@@ -71,7 +81,7 @@ public class GrafoOrientado extends Grafo {
 
     public ArrayList<Vertice> buscaTI(Vertice v) { //busca os vertices que um vertice consegue receber
         controle_vertice.removeAll(controle_vertice);
-        return transitivoIndireto(v);
+        return transitivoInverso(v);
     }
 
     public ArrayList<Vertice> arestasDoVertice(Vertice v) {
@@ -170,46 +180,43 @@ public class GrafoOrientado extends Grafo {
     public void malgrange() throws IOException {
         ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
         ArrayList<Vertice> copia = new ArrayList<Vertice>();
+        ArrayList<Vertice> remover = new ArrayList<Vertice>();
 
         copia.addAll(lista_vertice);
-        int contador = 0;
 
         for (Vertice v : copia) {
             if (!intersecao.isEmpty()) {
                 recriaVertices(intersecao);
                 intersecao.removeAll(intersecao);
             }
-            contador++;
+
             for (Vertice ftd : buscaTD(v)) {
                 for (Vertice fti : buscaTI(v)) {
                     if (fti.equals(ftd)) {
                         if (!intersecao.contains(fti)) {
                             intersecao.add(fti);
-                            System.out.println(fti.getNome());
                         }
                     }
                 }
             }
         }
-
-        System.out.println(intersecao.size());
-        
+//        removeArestaRepetida();
     }
-    int cont = 1;
 
     public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) throws IOException {
 
         ArrayList<Aresta> copia = new ArrayList<Aresta>();
         copia.addAll(lista_aresta);
 
-        Vertice vertice = new Vertice("novo" + cont);
+        String nome = "";
+        for (Vertice nomeia : intersecao) {
+            nome = nome + nomeia.getNome();
+        }
+        Vertice vertice = new Vertice(nome);
         addVertice(vertice);
-        System.out.println("cont = " + cont);
-        cont++;
 
         for (Vertice v : intersecao) {
             for (Aresta a : copia) {
-
                 if (a.getV1() == v) {
                     a.setV1(vertice);
                 }
@@ -219,11 +226,25 @@ public class GrafoOrientado extends Grafo {
                 if (a.getV1() == a.getV2()) {
                     removeAresta(a);
                 }
-
             }
             lista_vertice.remove(v);
-            System.out.println("remove" + lista_vertice.size());
         }
         return lista_vertice;
     }
+
+//    public void removeArestaRepetida() {
+//        ArrayList<Aresta> copia = new ArrayList<Aresta>();
+//        Aresta aresta;
+//        
+//        int cont = 0;
+//        
+//        for (Vertice v : lista_vertice) { //fe(ghia, cdb), ghia(cdb,cdb), cdb
+//        copia = buscaArestasVertice(v);
+//        for(Aresta a: copia){
+//        if(a.getV1() == v || a.getV2() == v){
+//            cont++;
+//        }
+//        }
+//        }
+//    }
 }
