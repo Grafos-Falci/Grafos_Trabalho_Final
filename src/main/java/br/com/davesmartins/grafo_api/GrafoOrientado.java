@@ -180,7 +180,6 @@ public class GrafoOrientado extends Grafo {
     public void malgrange() throws IOException {
         ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
         ArrayList<Vertice> copia = new ArrayList<Vertice>();
-        ArrayList<Vertice> remover = new ArrayList<Vertice>();
 
         copia.addAll(lista_vertice);
 
@@ -200,7 +199,8 @@ public class GrafoOrientado extends Grafo {
                 }
             }
         }
-//        removeArestaRepetida();
+
+        removeArestaRepetida();
     }
 
     public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) throws IOException {
@@ -232,19 +232,25 @@ public class GrafoOrientado extends Grafo {
         return lista_vertice;
     }
 
-//    public void removeArestaRepetida() {
-//        ArrayList<Aresta> copia = new ArrayList<Aresta>();
-//        Aresta aresta;
-//        
-//        int cont = 0;
-//        
-//        for (Vertice v : lista_vertice) { //fe(ghia, cdb), ghia(cdb,cdb), cdb
-//        copia = buscaArestasVertice(v);
-//        for(Aresta a: copia){
-//        if(a.getV1() == v || a.getV2() == v){
-//            cont++;
-//        }
-//        }
-//        }
-//    }
+    public void removeArestaRepetida() {
+
+        ArrayList<Aresta> novaLista = new ArrayList<Aresta>();
+        novaLista.add(lista_aresta.get(0));
+        for (Aresta a : lista_aresta) {
+            Aresta aresta = null;
+            for (Aresta nova : novaLista) {
+                if (nova.getV1() == a.getV1() && nova.getV2() == a.getV2()) {
+                    break;
+                }
+                if ((novaLista.indexOf(nova) == novaLista.size() - 1) && nova != a) {
+                    aresta = a;
+                }
+            }
+            if (aresta != null) {
+                novaLista.add(aresta);
+            }
+        }
+        lista_aresta.removeAll(lista_aresta);
+        lista_aresta.addAll(novaLista);
+    }
 }
