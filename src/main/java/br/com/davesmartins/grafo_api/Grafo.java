@@ -456,14 +456,52 @@ public class Grafo {
         return vertice;
     }
 
-    public void buscaProfundidade(Vertice vertice) {
-        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
-        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
+//    public int buscaProfundidade(Vertice vertice) {
+//        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
+//        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
+//
+//        controle_vertice.add(vertice);
+//
+//        System.out.println("Vertice: " + vertice.getNome() + " -> ");
+//        for (Vertice v : buscaVerticesAdjacentes(vertice)) {
+//            System.out.print(" | " + v.getNome());
+//        }
+//        for (Vertice vert : lista_vertice) {
+//            if (!visitados.contains(vert)) {
+//                buscaProfundidade(vert);
+//            }
+//        }
+//
+//        if (controle_vertice.equals(lista_vertice)) {
+//            return 0;
+//        }
+//        return 0;
+//    }
 
-        visitados.add(vertice);
-        System.out.print("Vertice: "+vertice.getNome());
-        for (Vertice v : buscaVerticesAdjacentes(vertice)) {
-            System.out.print(" -> "+v.getNome());
+    public void buscaLargura(Vertice inicio) {
+        ArrayList<Vertice> fila = new ArrayList<Vertice>();
+        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
+
+        Vertice aux;
+        Vertice i = inicio;
+        fila.add(i);
+        visitados.add(i);
+
+        while (!fila.isEmpty()) {
+            visitados.add(i);
+            System.out.println("\n" + i.getNome() + " -> ");
+            for (Vertice v : buscaVerticesAdjacentes(i)) {
+                System.out.print(v.getNome() + " | ");
+                aux = v;
+                if (!visitados.contains(aux)) {
+                    fila.add(aux);
+                    visitados.add(aux);
+                }
+            }
+            fila.remove(i);
+            if (!fila.isEmpty()) {
+                i = fila.get(0);
+            }
         }
     }
 
