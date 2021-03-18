@@ -38,16 +38,6 @@ public class GrafoOrientado extends Grafo {
         return aresta;
     }
 
-    public ArrayList<Aresta> buscaArestasVertice(Vertice v) { //busca as arestas ligadas ao vertice 2
-        ArrayList<Aresta> aresta = new ArrayList<Aresta>();
-        for (Aresta a : lista_aresta) {
-            if (a.getV1() == v || a.getV2() == v) {
-                aresta.add(a);
-            }
-        }
-        return aresta;
-    }
-
     public ArrayList<Vertice> transitivoDireto(Vertice v) { //
         controle_vertice.add(v);
         ArrayList<Vertice> vertice = new ArrayList<Vertice>();
@@ -105,7 +95,6 @@ public class GrafoOrientado extends Grafo {
                     }
                 }
             }
-
         }
         return vertice;
     }

@@ -441,4 +441,30 @@ public class Grafo {
         return arvore + "}";
     }
 
+    public ArrayList<Vertice> buscaVerticesAdjacentes(Vertice v) {
+        ArrayList<Aresta> aresta = buscaAresta(v);
+        ArrayList<Vertice> vertice = new ArrayList<Vertice>();
+
+        for (Aresta a : aresta) {
+            if (a.getV1() == v) {
+                vertice.add(a.getV2());
+            }
+            if (a.getV2() == v) {
+                vertice.add(a.getV1());
+            }
+        }
+        return vertice;
+    }
+
+    public void buscaProfundidade(Vertice vertice) {
+        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
+        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
+
+        visitados.add(vertice);
+        System.out.print("Vertice: "+vertice.getNome());
+        for (Vertice v : buscaVerticesAdjacentes(vertice)) {
+            System.out.print(" -> "+v.getNome());
+        }
+    }
+
 }
