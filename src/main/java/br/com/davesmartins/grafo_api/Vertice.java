@@ -8,6 +8,7 @@ public class Vertice {
     private Aresta arestaPai; 
     private double distance = Double.POSITIVE_INFINITY; //distancia do vertice ao vértice origem
     private int grupo;
+    boolean visitado = false;
     
     
     Vertice(String vertice) {
@@ -61,6 +62,15 @@ public class Vertice {
     public void setGrupo(int grupo) {
         this.grupo = grupo;
     }
+
+    public boolean isVisitado() {
+        return visitado;
+    }
+
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
+    }
+    
     
 
 }

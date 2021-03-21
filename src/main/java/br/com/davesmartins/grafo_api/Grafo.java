@@ -456,28 +456,6 @@ public class Grafo {
         return vertice;
     }
 
-//    public int buscaProfundidade(Vertice vertice) {
-//        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
-//        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
-//
-//        controle_vertice.add(vertice);
-//
-//        System.out.println("Vertice: " + vertice.getNome() + " -> ");
-//        for (Vertice v : buscaVerticesAdjacentes(vertice)) {
-//            System.out.print(" | " + v.getNome());
-//        }
-//        for (Vertice vert : lista_vertice) {
-//            if (!visitados.contains(vert)) {
-//                buscaProfundidade(vert);
-//            }
-//        }
-//
-//        if (controle_vertice.equals(lista_vertice)) {
-//            return 0;
-//        }
-//        return 0;
-//    }
-
     public void buscaLargura(Vertice inicio) {
         ArrayList<Vertice> fila = new ArrayList<Vertice>();
         ArrayList<Vertice> visitados = new ArrayList<Vertice>();
@@ -489,7 +467,7 @@ public class Grafo {
 
         while (!fila.isEmpty()) {
             visitados.add(i);
-            System.out.println("\n" + i.getNome() + " -> ");
+            System.out.print("\n" + i.getNome() + " -> ");
             for (Vertice v : buscaVerticesAdjacentes(i)) {
                 System.out.print(v.getNome() + " | ");
                 aux = v;
@@ -501,6 +479,16 @@ public class Grafo {
             fila.remove(i);
             if (!fila.isEmpty()) {
                 i = fila.get(0);
+            }
+        }
+    }
+
+    public void buscaProfundidade(Vertice v) {
+        v.setVisitado(true);
+        System.out.print("[" + v.getNome() + "]");
+        for (Vertice vertice : buscaVerticesAdjacentes(v)) {
+            if (vertice.isVisitado() == false) {
+                buscaProfundidade(vertice);
             }
         }
     }

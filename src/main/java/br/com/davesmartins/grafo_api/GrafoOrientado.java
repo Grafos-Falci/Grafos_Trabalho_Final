@@ -242,4 +242,52 @@ public class GrafoOrientado extends Grafo {
         lista_aresta.removeAll(lista_aresta);
         lista_aresta.addAll(novaLista);
     }
+
+    public ArrayList<Vertice> buscaVerticesAdjacentesOrientado(Vertice v) {
+        ArrayList<Vertice> vertice = new ArrayList<Vertice>();
+
+        for (Aresta a : lista_aresta) {
+            if (a.getV1() == v) {
+
+                vertice.add(a.getV2());
+            }
+        }
+        return vertice;
+    }
+
+    public void buscaProfundidadeOrientado(Vertice v) {
+        v.setVisitado(true);
+        System.out.print("[" + v.getNome() + "]");
+        for (Vertice vertice : buscaVerticesAdjacentesOrientado(v)) {
+            if (vertice.isVisitado() == false) {
+                buscaProfundidadeOrientado(vertice);
+            }
+        }
+    }
+        public void buscaLarguraOrientado(Vertice inicio) {
+        ArrayList<Vertice> fila = new ArrayList<Vertice>();
+        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
+
+        Vertice aux;
+        Vertice i = inicio;
+        fila.add(i);
+        visitados.add(i);
+
+        while (!fila.isEmpty()) {
+            visitados.add(i);
+            System.out.print("\n" + i.getNome() + " -> ");
+            for (Vertice v : buscaVerticesAdjacentesOrientado(i)) {
+                System.out.print(v.getNome() + " | ");
+                aux = v;
+                if (!visitados.contains(aux)) {
+                    fila.add(aux);
+                    visitados.add(aux);
+                }
+            }
+            fila.remove(i);
+            if (!fila.isEmpty()) {
+                i = fila.get(0);
+            }
+        }
+    }
 }

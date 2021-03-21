@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class TesteSemMenu {
 
     public static void main(String[] args) throws IOException {
-//        GrafoOrientado grafo = new GrafoOrientado();
-        Grafo grafo = new Grafo();
+        GrafoOrientado grafo = new GrafoOrientado();
+//       Grafo grafo = new Grafo();
 
         Vertice a = new Vertice("a");
         Vertice b = new Vertice("b");
@@ -60,7 +60,7 @@ public class TesteSemMenu {
         grafo.addAresta(a13);
         grafo.addAresta(a14);
 
-        Graph.createStringDotToPng(grafo.dotSimples(), "antes.png");
-        grafo.buscaLargura(a);
+        Graph.createStringDotToPng(grafo.dotOrientado(), "antes.png");
+        grafo.buscaLarguraOrientado(a);
     }
 }
