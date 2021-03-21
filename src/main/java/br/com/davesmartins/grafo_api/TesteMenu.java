@@ -199,7 +199,7 @@ public class TesteMenu {
 
                 case 3:
                     int op3 = 0;
-                    while (op != 15) {
+                    while (op != 19) {
                         System.out.println("---------------Matriz---------------");
                         System.out.println("1 - Mostrar Ordem");
                         System.out.println("2 - Mostrar Grau");
@@ -215,7 +215,11 @@ public class TesteMenu {
                         System.out.println("12 - Gerar menor caminho (nao orientado)");
                         System.out.println("13 - Gerar imagem da arvore (Kruskal)");
                         System.out.println("14 - Gerar Grafo reduzido (malgrange)");
-                        System.out.println("15 - Sair");
+                        System.out.println("15 - Buscar profundiade do grafo(nao orientado)");
+                        System.out.println("16 - Buscar profundiade do grafo(orientado)");
+                        System.out.println("17 - Buscar largura do grafo(nao orientado)");
+                        System.out.println("18 - Buscar largura do grafo(orientado)");
+                        System.out.println("19 - Sair");
                         op3 = leitor.nextInt();
 
                         switch (op3) {
@@ -298,7 +302,26 @@ public class TesteMenu {
                                 grafoOrientado.malgrange();
                                 Graph.createStringDotToPng(grafoOrientado.dotOrientado(), "grafoReduzido.png");
                                 break;
-
+                            case 15:
+                                System.out.println("Informe um vertice para comecar: ");
+                                v1 = leitor.next();
+                                grafo.buscaProfundidade(grafo.buscaVertice(v1));
+                                break;
+                            case 16:
+                                System.out.println("Informe um vertice para comecar: ");
+                                v1 = leitor.next();
+                                grafo.buscaProfundidade(grafo.buscaVertice(v1));
+                                break;
+                            case 17:
+                                System.out.println("Informe um vertice para comecar: ");
+                                v1 = leitor.next();
+                                grafoOrientado.buscaProfundidadeOrientado(grafo.buscaVertice(v1));
+                                break;
+                            case 18:
+                                System.out.println("Informe um vertice para comecar: ");
+                                v1 = leitor.next();
+                                grafoOrientado.buscaProfundidadeOrientado(grafo.buscaVertice(v1));
+                                break;
                         }
                     }
                     break;
