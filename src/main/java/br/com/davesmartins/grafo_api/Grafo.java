@@ -1,6 +1,5 @@
 package br.com.davesmartins.grafo_api;
 
-import br.com.davesmartins.api.Graph;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -148,23 +147,7 @@ public class Grafo {
         return DOT;
     }
 
-    public int[][] matrizAdjacencia() { //imprime a matriz de adjacência
-
-        int matriz[][] = new int[lista_vertice.size()][lista_vertice.size()];
-        for (Vertice linha : lista_vertice) {
-
-            for (Vertice coluna : lista_vertice) {
-                if (verificaAresta(linha, coluna)) {
-                    matriz[lista_vertice.indexOf(linha)][lista_vertice.indexOf(coluna)] = 1;
-                } else {
-                    matriz[lista_vertice.indexOf(linha)][lista_vertice.indexOf(coluna)] = 0;
-                }
-            }
-        }
-        return matriz;
-    }
-
-    public void matrizAdjacencia2() { //imprime a matriz de adjacência
+    public void matrizAdjacencia() { //imprime a matriz de adjacência
 
         String matriz = "";
         for (Vertice linha : lista_vertice) {
@@ -230,27 +213,19 @@ public class Grafo {
     }
 
     public boolean Grafo_completo() { //verifica se o grafo é completo
-        int matriz[][] = matrizAdjacencia();
-        for (int linha = 0; linha < lista_vertice.size(); linha++) {
-            for (int coluna = 0; coluna < lista_vertice.size(); coluna++) {
-                if (linha == coluna && matriz[linha][coluna] != 0) {
-                    return false;
-                } else {
-                    if (linha != coluna && matriz[linha][coluna] != 1) {
-                        return false;
-                    }
-                }
-            }
+        int numArestas = (Ordem() * (Ordem() - 1) / 2);
+        if (this.lista_aresta.size() == numArestas) {
+            return true;
+        } else {    
+            return false;
         }
-
-        return true;
     }
 
     public boolean grafoConexo() { //verifica se o grafo é conexo
         controle_vertice.removeAll(controle_vertice);
-        ArrayList<Vertice> vertice = arestasDoVertice(lista_vertice.get(0));
-        vertice = new ArrayList<Vertice>(new HashSet<Vertice>(vertice));
-        System.out.println(vertice.size() + "  " + lista_vertice.size());
+        ArrayList<Vertice> vertice = listaVerticesConectados(lista_vertice.get(0));
+        vertice = new ArrayList<Vertice>(new HashSet<Vertice>(vertice)); //hashset impede vertices repetios 
+        System.out.println(vertice.size());
         if (vertice.size() == lista_vertice.size()) {
             return true;
         } else {
@@ -258,7 +233,7 @@ public class Grafo {
         }
     }
 
-    public ArrayList<Vertice> arestasDoVertice(Vertice v) {
+    public ArrayList<Vertice> listaVerticesConectados(Vertice v) {
         ArrayList<Aresta> aresta = buscaAresta(v);
         ArrayList<Vertice> vertice = new ArrayList<Vertice>();
         if (aresta.size() == 0) {
@@ -273,11 +248,11 @@ public class Grafo {
                 if (a.getV1() == v) {
                     if (!(controle_vertice.contains(a.getV2()))) {
                         vertice.add(a.getV2());
-                        vertice.addAll(arestasDoVertice(a.getV2())); //recursividade (chama a própria função)
+                        vertice.addAll(listaVerticesConectados(a.getV2())); //recursividade (chama a própria função)
                     } else {
                         if (!(controle_vertice.contains(a.getV1()))) {
                             vertice.add(a.getV1());
-                            vertice.addAll(arestasDoVertice(a.getV1()));
+                            vertice.addAll(listaVerticesConectados(a.getV1()));
                         }
                     }
                 }
@@ -340,7 +315,7 @@ public class Grafo {
         return ordemVertices;
     }
 
-    public String Dijikstra(Vertice origem, Vertice destino) { //mostra via dot o menor arquivo
+    public String Dijikstra(Vertice origem, Vertice destino) { //mostra via dot o menor caminho
         ArrayList<Vertice> menor = menorCaminho(origem, destino);
         ArrayList<Aresta> caminhos = new ArrayList<Aresta>();
         ArrayList<Aresta> outros = new ArrayList<Aresta>();
@@ -400,7 +375,7 @@ public class Grafo {
 
     public ArrayList<Aresta> kruskal() {
         ArrayList<Aresta> A = new ArrayList<Aresta>();
-        A.addAll(ordenarAresta());
+        A.addAll(ordenarAresta()); //organiza as arestas por tamanho
         int n = this.getLista_vertice().size();
         ArrayList<Aresta> arvore = new ArrayList<Aresta>();
 
@@ -413,14 +388,14 @@ public class Grafo {
         int i = 0;
         int comp_u;
         int comp_v;
-        while ((arvore.size() < (n - 1)) && (!A.isEmpty())) {
+        while ((arvore.size() < (n - 1)) && (!A.isEmpty())) {  // (n-1) = galhos
             Vertice u = A.get(i).getV1();
             Vertice v = A.get(i).getV2();
 
             comp_u = u.getGrupo();   //grupo 1
             comp_v = v.getGrupo();   //grupo 2
 
-            if (comp_u != comp_v) {
+            if (comp_u != comp_v) { //se os grupos forem diferentes, juntamos os componentes 
                 v.setGrupo(comp_u);
                 u.setGrupo(comp_u);
                 arvore.add(new Aresta(u, v, A.get(i).getDistancia()));

@@ -232,7 +232,7 @@ public class TesteMenu {
                                 System.out.println("Grau: " + grafo.Grau(v));
                                 break;
                             case 3:
-                                System.out.println(grafo.matrizAdjacencia());
+                                grafo.matrizAdjacencia();
                                 break;
                             case 4:
                                 System.out.println(grafo.dotSimples());

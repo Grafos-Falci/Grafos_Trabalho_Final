@@ -74,7 +74,7 @@ public class GrafoOrientado extends Grafo {
         return transitivoInverso(v);
     }
 
-    public ArrayList<Vertice> arestasDoVertice(Vertice v) {
+    public ArrayList<Vertice> listaVerticesConectados(Vertice v) {
         ArrayList<Aresta> aresta = buscaAresta(v);
         ArrayList<Vertice> vertice = new ArrayList<Vertice>();
         vertice.add(v);
@@ -86,11 +86,11 @@ public class GrafoOrientado extends Grafo {
                 if (a.getV1() == v) {
                     if (!(controle_vertice.contains(a.getV2()))) {
                         vertice.add(a.getV2());
-                        vertice.addAll(arestasDoVertice(a.getV2()));
+                        vertice.addAll(listaVerticesConectados(a.getV2()));
                     } else {
                         if (!(controle_vertice.contains(a.getV1()))) {
                             vertice.add(a.getV1());
-                            vertice.addAll(arestasDoVertice(a.getV1()));
+                            vertice.addAll(listaVerticesConectados(a.getV1()));
                         }
                     }
                 }
@@ -264,7 +264,8 @@ public class GrafoOrientado extends Grafo {
             }
         }
     }
-        public void buscaLarguraOrientado(Vertice inicio) {
+
+    public void buscaLarguraOrientado(Vertice inicio) {
         ArrayList<Vertice> fila = new ArrayList<Vertice>();
         ArrayList<Vertice> visitados = new ArrayList<Vertice>();
 

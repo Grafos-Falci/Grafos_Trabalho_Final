@@ -4,17 +4,17 @@ public class Aresta {
 
     private Vertice v1;
     private Vertice v2;
-    private double distancia=1; //valor da aresta
-
+    private double distancia = 1; //valor da aresta
 
     public Aresta(Vertice v1, Vertice v2, double distancia) { //construtor com valor 
         this.v1 = v1;
         this.v2 = v2;
         this.distancia = distancia;
     }
+
     public Aresta(Vertice v1, Vertice v2) { //construtor sem valor 
         this.v1 = v1;
-        this.v2 = v2; 
+        this.v2 = v2;
     }
 
     public Vertice getV1() {
@@ -40,5 +40,5 @@ public class Aresta {
     public void setDistancia(double distancia) {
         this.distancia = distancia;
     }
-    
+
 }

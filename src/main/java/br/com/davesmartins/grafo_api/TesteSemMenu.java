@@ -7,43 +7,28 @@ import java.util.Scanner;
 public class TesteSemMenu {
 
     public static void main(String[] args) throws IOException {
-        GrafoOrientado grafo = new GrafoOrientado();
-//       Grafo grafo = new Grafo();
+        GrafoOrientado grafo1 = new GrafoOrientado();
+        Grafo grafo = new Grafo();
 
-        Vertice a = new Vertice("a");
-        Vertice b = new Vertice("b");
-        Vertice c = new Vertice("c");
-        Vertice d = new Vertice("d");
-        Vertice e = new Vertice("e");
-        Vertice f = new Vertice("f");
-        Vertice g = new Vertice("g");
-        Vertice h = new Vertice("h");
-        Vertice i = new Vertice("i");
+        Vertice a = new Vertice("0");
+        Vertice b = new Vertice("1");
+        Vertice c = new Vertice("2");
+        Vertice d = new Vertice("3");
+        Vertice e = new Vertice("4");
 
         grafo.addVertice(a);
         grafo.addVertice(b);
         grafo.addVertice(c);
         grafo.addVertice(d);
         grafo.addVertice(e);
-        grafo.addVertice(f);
-        grafo.addVertice(g);
-        grafo.addVertice(h);
-        grafo.addVertice(i);
 
-        Aresta a1 = new Aresta(i, a, 4);
-        Aresta a2 = new Aresta(i, g, 5);
-        Aresta a3 = new Aresta(h, i, 2);
-        Aresta a4 = new Aresta(h, a, 1);
-        Aresta a5 = new Aresta(g, h, 10);
-        Aresta a6 = new Aresta(g, d, 5);
-        Aresta a7 = new Aresta(a, b, 2);
-        Aresta a8 = new Aresta(a, g, 1);
-        Aresta a9 = new Aresta(b, c, 10);
-        Aresta a10 = new Aresta(c, d, 10);
-        Aresta a11 = new Aresta(d, b, 10);
-        Aresta a12 = new Aresta(e, d, 10);
-        Aresta a13 = new Aresta(e, f, 10);
-        Aresta a14 = new Aresta(f, g, 10);
+        Aresta a1 = new Aresta(a, c, 100);
+        Aresta a2 = new Aresta(a, d, 50);
+        Aresta a3 = new Aresta(d, e, 100);
+        Aresta a4 = new Aresta(e, b, 125);
+        Aresta a5 = new Aresta(c, b, 50);
+        Aresta a6 = new Aresta(c, e, 50);
+        Aresta a7 = new Aresta(c, d, 50);
 
         grafo.addAresta(a1);
         grafo.addAresta(a2);
@@ -52,15 +37,10 @@ public class TesteSemMenu {
         grafo.addAresta(a5);
         grafo.addAresta(a6);
         grafo.addAresta(a7);
-        grafo.addAresta(a8);
-        grafo.addAresta(a9);
-        grafo.addAresta(a10);
-        grafo.addAresta(a11);
-        grafo.addAresta(a12);
-        grafo.addAresta(a13);
-        grafo.addAresta(a14);
 
-        Graph.createStringDotToPng(grafo.dotOrientado(), "antes.png");
-        grafo.buscaLarguraOrientado(a);
+//        for(Vertice v: grafo.arestasDoVertice(a)){
+//            System.out.println(v.getNome());
+//    }
+        System.out.println(grafo.grafoConexo());;
     }
 }

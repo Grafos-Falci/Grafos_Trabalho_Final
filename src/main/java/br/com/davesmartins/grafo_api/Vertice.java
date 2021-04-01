@@ -4,13 +4,12 @@ public class Vertice {
 
     private String nome;
     private int quantidade_aresta; //quantidade de arestas que o vertie possui
-    private Vertice pai;
-    private Aresta arestaPai; 
+    private Vertice pai; //vertice de onde veio o vertice atual
+    private Aresta arestaPai; //aresta de onde veio o aresta atual
     private double distance = Double.POSITIVE_INFINITY; //distancia do vertice ao vértice origem
-    private int grupo;
+    private int grupo; //grupo a que pertence o vertice (kruskal)
     boolean visitado = false;
-    
-    
+
     Vertice(String vertice) {
         this.nome = vertice;
     }
@@ -70,7 +69,5 @@ public class Vertice {
     public void setVisitado(boolean visitado) {
         this.visitado = visitado;
     }
-    
-    
 
 }
