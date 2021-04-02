@@ -278,13 +278,17 @@ public class TesteMenu {
                                         case 2:
                                             System.out.println("Fecho Transitivo Direto(Informe o Vertice): ");
                                             v1 = leitor.next();
-                                            Vertice vertice_ftd = new Vertice(v1);
-                                            grafoOrientado.buscaTD(vertice_ftd);
+                                             for(Vertice direto :grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1))){
+                                                System.out.print("["+direto.getNome()+"]");
+                                            }
+                                            
                                             break;
                                         case 3:
                                             System.out.println("Fecho Transitivo Inverso(Informe o Vertice): ");
                                             v1 = leitor.next();
-                                            grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1));
+                                            for(Vertice inverso :grafoOrientado.buscaTI(grafoOrientado.buscaVertice(v1))){
+                                                System.out.print("["+inverso.getNome()+"]");
+                                            }
                                             break;
                                         case 4:
                                             System.out.println("Informe o vertice de origem");
