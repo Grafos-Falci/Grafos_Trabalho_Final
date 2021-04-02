@@ -36,7 +36,11 @@ public class TesteSemMenu {
         grafo.addAresta(a4);
         grafo.addAresta(a5);
 
-        Graph.createStringDotToPng(grafo.imprimeArvore(), "arvorinharennnan");
+//        Graph.createStringDotToPng(grafo.imprimeArvore(), "rennantree");
+            
+            System.out.println(grafo.imprimeArvore());
+            Graph.createStringDotToPng(grafo.imprimeArvore(), "newtree");
+ 
 
     }
 }

@@ -1,5 +1,6 @@
 package br.com.davesmartins.grafo_api;
 
+import br.com.davesmartins.api.Graph;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Grafo {
 
@@ -225,7 +228,10 @@ public class Grafo {
         controle_vertice.removeAll(controle_vertice);
         ArrayList<Vertice> vertice = listaVerticesConectados(lista_vertice.get(0));
         vertice = new ArrayList<Vertice>(new HashSet<Vertice>(vertice)); //hashset impede vertices repetios 
-        System.out.println(vertice.size());
+        for (Vertice v : vertice) {
+            System.out.println("Tamanho " + v.getNome());
+        }
+
         if (vertice.size() == lista_vertice.size()) {
             return true;
         } else {
@@ -411,16 +417,25 @@ public class Grafo {
                 grafo.addAresta(a);
             }
         }
-        while (!grafo.grafoConexo()) {
+        grafo.testeConexa();
+        while (!grafo.testeConexa()) {
             Aresta aresta = grafo.completaGrafo(getLista_aresta());
-            grafo.addAresta(aresta);
+
+            if (aresta == null) {
+                System.out.println("ok");
+            } else {
+                System.out.println("Entrou no else");
+                grafo.addAresta(aresta);
+            }
+            grafo.testeConexa();
+
         }
         return grafo;
     }
 
     public String imprimeArvore() {
-        Grafo grafo = kruskal();
-        return grafo.dotSimplesValorado();
+        Grafo arvore = kruskal();
+        return arvore.dotSimplesValorado();
     }
 
     public ArrayList<Vertice> buscaVerticesAdjacentes(Vertice v) {
@@ -476,27 +491,94 @@ public class Grafo {
     }
 
     private Aresta completaGrafo(ArrayList<Aresta> lista_aresta) {
+
         Aresta referencia = null;
         double distancia = Double.POSITIVE_INFINITY;
         for (Vertice vertice : this.getLista_vertice()) {
             for (Vertice v : this.getLista_vertice()) {
                 if (v == vertice) {
-                    break;
+
+                } else {
+                    controle_vertice.removeAll(controle_vertice);
+                    if (!encontrarVertice(v).contains(vertice)) {
+
+                        for (Aresta a : lista_aresta) {
+                            if ((a.getV1() == v && a.getV2() == vertice) || (a.getV2() == v && a.getV1() == vertice)) {
+
+                                if (distancia > a.getDistancia()) {
+
+                                    referencia = a;
+                                    distancia = a.getDistancia();
+                                }
+                            }
+                        }
+                    }
                 }
-                controle_vertice.removeAll(controle_vertice);
-                if (!encontrarVertice(v).contains(vertice)) {
-                }
+
             }
         }
+        return referencia;
     }
 
     private ArrayList<Vertice> encontrarVertice(Vertice v) {
-        ArrayList<Vertice> listaVertices = new ArrayList<Vertice>(); 
-        for (Aresta aresta : buscaAresta(v)) {
-            if(aresta.getV1() == v){
-            
+        ArrayList<Vertice> listaVertices = new ArrayList<Vertice>();
+        ArrayList<Aresta> listaArestas = buscaAresta(v);
+        controle_vertice.add(v);
+        listaVertices.add(v);
+
+        for (Aresta a : listaArestas) {
+            if (a.getV1() == v) {
+                if (!controle_vertice.contains(a.getV2())) {
+                    listaVertices.addAll(encontrarVertice(a.getV2()));
+                }
             }
+            if (a.getV2() == v) {
+                if (!controle_vertice.contains(a.getV1())) {
+                    listaVertices.addAll(encontrarVertice(a.getV1()));
+                }
+            }
+        }
+        return listaVertices;
+    }
+
+    public boolean testeConexa() {
+        controle_vertice.removeAll(controle_vertice);
+        ArrayList<Vertice> road = roadVertice(this.lista_vertice.get(0));
+        road = new ArrayList<Vertice>(new HashSet<Vertice>(road));
+        if (road.size() == lista_vertice.size()) {
+            return true;
+        } else {
+            return false;
         }
     }
 
+    private ArrayList<Vertice> roadVertice(Vertice v) {
+        ArrayList<Aresta> listaAresta = buscaAresta(v);
+        ArrayList<Vertice> listaVertice = new ArrayList<Vertice>();
+        if (listaAresta.size() == 0) {
+            return listaVertice;
+        }
+        controle_vertice.add(v);
+        listaVertice.add(v);
+        for (Aresta a : listaAresta) {
+            if (a.getV1() == v && a.getV2() == v) {
+
+            } else {
+                if (a.getV1() == v) {
+                    if (!(controle_vertice.contains(a.getV2()))) {
+                        listaVertice.add(a.getV2());
+                        listaVertice.addAll(roadVertice(a.getV2()));
+                    }
+
+                } else {
+                    if (!(controle_vertice.contains(a.getV1()))) {
+                        listaVertice.add(a.getV1());
+                        listaVertice.addAll(roadVertice(a.getV1()));
+                    }
+                }
+
+            }
+        }
+        return listaVertice;
+    }
 }
