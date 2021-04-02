@@ -44,13 +44,15 @@ public class TesteMenu {
                         switch (op1) {
                             case 1:
                                 int op11 = 0;
-                                while (op11 != 4) {
+                                while (op11 != 6) {
 
                                     System.out.println("---------------Operacoes---------------");
                                     System.out.println("1 - Inserir Vertice");
                                     System.out.println("2 - Inserir Aresta");
                                     System.out.println("3 - Inserir Aresta valorada");
-                                    System.out.println("4 - Sair");
+                                    System.out.println("4 - Remover Vertice");
+                                    System.out.println("5 - Remover Aresta");
+                                    System.out.println("6 - Sair");
                                     op11 = leitor.nextInt();
 
                                     switch (op11) {
@@ -63,25 +65,37 @@ public class TesteMenu {
                                         case 2:
                                             System.out.println("Vertice 1: ");
                                             v1 = leitor.next();
-                                            vert1 = new Vertice(v1);
 
                                             System.out.println("Vertice 2: ");
                                             v2 = leitor.next();
-                                            vert2 = new Vertice(v2);
+
                                             grafo.inserirAresta(v1, v2);
                                             break;
                                         case 3:
                                             System.out.println("Vertice 1: ");
                                             v1 = leitor.next();
-                                            vert1 = new Vertice(v1);
 
                                             System.out.println("Vertice 2: ");
                                             v2 = leitor.next();
-                                            vert2 = new Vertice(v2);
 
                                             System.out.println("Insira o valor da Aresta: ");
                                             valor = leitor.nextDouble();
                                             grafo.inserirArestaValorada(v1, v2, valor);
+                                            break;
+                                        case 4:
+                                            System.out.println("Vertice para remocao: ");
+                                            v1 = leitor.next();
+                                            grafo.removeVertice(grafo.buscaVertice(v1));
+
+                                            break;
+                                        case 5:
+                                            System.out.println("Vertice 1 da aresta: ");
+                                            v1 = leitor.next();
+
+                                            System.out.println("Vertice 2 da aresta: ");
+                                            v2 = leitor.next();
+
+                                            grafo.removeAresta(grafo.buscaArestaDosVertices(grafo.buscaVertice(v1), grafo.buscaVertice(v2)));
                                             break;
                                     }
                                 }
@@ -89,13 +103,15 @@ public class TesteMenu {
                                 break;
                             case 2:
                                 int op12 = 0;
-                                while (op12 != 4) {
+                                while (op12 != 6) {
 
                                     System.out.println("---------------Operacoes---------------");
                                     System.out.println("1 - Inserir Vertice");
                                     System.out.println("2 - Inserir Aresta");
                                     System.out.println("3 - Inserir Aresta(Valorada)");
-                                    System.out.println("4 - Sair");
+                                    System.out.println("4 - Remover Vertice");
+                                    System.out.println("5 - Remover Aresta");
+                                    System.out.println("6 - Sair");
                                     op12 = leitor.nextInt();
 
                                     switch (op12) {
@@ -108,26 +124,38 @@ public class TesteMenu {
                                         case 2:
                                             System.out.println("Vertice de origem: ");
                                             v1 = leitor.next();
-                                            vert1 = new Vertice(v1);
 
                                             System.out.println("Vertice de destino: ");
                                             v2 = leitor.next();
-                                            vert2 = new Vertice(v2);
                                             grafoOrientado.inserirAresta(v1, v2);
                                             break;
                                         case 3:
                                             System.out.println("Vertice 1: ");
                                             v1 = leitor.next();
-                                            vert1 = new Vertice(v1);
 
                                             System.out.println("Vertice 2: ");
                                             v2 = leitor.next();
-                                            vert2 = new Vertice(v2);
 
                                             System.out.println("Insira o valor da Aresta: ");
                                             valor = leitor.nextDouble();
                                             grafoOrientado.inserirArestaValorada(v1, v2, valor);
                                             break;
+                                        case 4:
+                                            System.out.println("Vertice para remocao: ");
+                                            v1 = leitor.next();
+                                            grafoOrientado.removeVertice(grafoOrientado.buscaVertice(v1));
+
+                                            break;
+                                        case 5:
+                                            System.out.println("Vertice 1 da aresta: ");
+                                            v1 = leitor.next();
+
+                                            System.out.println("Vertice 2 da aresta: ");
+                                            v2 = leitor.next();
+
+                                            grafoOrientado.removeAresta(grafoOrientado.buscaArestaDosVertices(grafoOrientado.buscaVertice(v1), grafoOrientado.buscaVertice(v2)));
+                                            break;
+
                                     }
                                 }
                                 break;
@@ -387,8 +415,8 @@ public class TesteMenu {
                                 }
 
                                 System.out.println("Imagem DOT orientado criada!");
-                                Graph.createStringDotToPng(grafoOrientado.dotSimples(), "imagemDOTOrientado");
-                                Graph.createStringDotToPng(grafoOrientado.dotSimplesValorado(), "imagemDOTOrientadoValorado");
+                                Graph.createStringDotToPng(grafoOrientado.dotOrientado(), "imagemDOTOrientado");
+                                Graph.createStringDotToPng(grafoOrientado.dotOrientadoValorado(), "imagemDOTOrientadoValorado");
                                 break;
                         }
                     }

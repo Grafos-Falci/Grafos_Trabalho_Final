@@ -105,18 +105,29 @@ public class Grafo {
     public void removeAresta(Aresta a) {
         lista_aresta.remove(a);
     }
-
-    public void removeVertice(Vertice v) {
+    public Aresta buscaArestaDosVertices(Vertice v1, Vertice v2) {
         for (Aresta a : lista_aresta) {
-            if (a.getV1() == v || a.getV2() == v) { //se a aresta for do vertice, deletamos ela
-                this.removeAresta(a);
+            if ((a.getV1().equals(v1) && a.getV2().equals(v2)) ||(a.getV1().equals(v2) && a.getV2().equals(v1)) ) {
+                return a;
             }
         }
-        lista_vertice.remove(v);    //por fim removemos o vertice da lista
+        return null;
     }
 
     public int Ordem() {    //calcula a ordem (numero de vertices) do grafo 
         return lista_vertice.size();
+    }
+    public void removeVertice(Vertice v) {
+        this.lista_vertice.remove(v);
+        ArrayList<Aresta> listaArestas = new ArrayList<Aresta>();
+        for (Aresta a : lista_aresta) {
+            if (a != null) {
+                if (a.getV1() == v || a.getV2() == v) {
+                    listaArestas.add(a);
+                }
+            }
+        }
+        this.lista_aresta.removeAll(listaArestas);
     }
 
     public int Grau(String v) {

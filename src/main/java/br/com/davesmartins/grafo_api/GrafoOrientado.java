@@ -7,6 +7,28 @@ import java.util.Collections;
 
 public class GrafoOrientado extends Grafo {
 
+    public Aresta buscaArestaDosVerticesOrientado(Vertice v1, Vertice v2) {
+        for (Aresta a : lista_aresta) {
+            if ((a.getV1().equals(v1) && a.getV2().equals(v2))) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public void removeVerticeOrientado(Vertice v) {
+        this.lista_vertice.remove(v);
+        ArrayList<Aresta> listaArestas = new ArrayList<Aresta>();
+        for (Aresta a : lista_aresta) {
+            if (a != null) {
+                if (a.getV1() == v || a.getV2() == v) {
+                    listaArestas.add(a);
+                }
+            }
+        }
+        this.lista_aresta.removeAll(listaArestas);
+    }
+
     public String dotOrientado() {
 
         String DOT;
@@ -16,6 +38,20 @@ public class GrafoOrientado extends Grafo {
         }
         for (Aresta aresta : lista_aresta) {
             DOT = DOT + aresta.getV1().getNome() + " -> " + aresta.getV2().getNome() + ";\n";
+        }
+        DOT = DOT + "}";
+        return DOT;
+    }
+     
+    public String dotOrientadoValorado() {
+
+        String DOT;
+        DOT = "digraph{\n";
+        for (Vertice vertice : lista_vertice) {
+            DOT = DOT + vertice.getNome() + ";\n";
+        }
+        for (Aresta aresta : lista_aresta) {
+            DOT = DOT + aresta.getV1().getNome() + " -> " + aresta.getV2().getNome()+ "[label = \"" + aresta.getDistancia() + "\"];\n";
         }
         DOT = DOT + "}";
         return DOT;
@@ -169,7 +205,7 @@ public class GrafoOrientado extends Grafo {
         return dot;
     }
 
-    public void malgrange(){
+    public void malgrange() {
         ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
         ArrayList<Vertice> copia = new ArrayList<Vertice>();
 
@@ -195,7 +231,7 @@ public class GrafoOrientado extends Grafo {
         removeArestaRepetida();
     }
 
-    public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao){
+    public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) {
 
         ArrayList<Aresta> copia = new ArrayList<Aresta>();
         copia.addAll(lista_aresta);
