@@ -364,55 +364,63 @@ public class Grafo {
 
     public ArrayList<Aresta> ordenarAresta() {
         ArrayList<Aresta> arestas = new ArrayList<Aresta>();
-        ArrayList<Aresta> listaArestas = new ArrayList<Aresta>();
-        listaArestas.addAll(getLista_aresta());
-        for (int i = 0; i < getLista_aresta().size(); i++) {
-            arestas.add(menoresArestas(listaArestas));
-            listaArestas.remove(menoresArestas(listaArestas));
+        arestas.add(getLista_aresta().get(0));
+        for (Aresta geral: getLista_aresta()) {
+          int posicao=0;
+          for(Aresta a: arestas){
+              if(geral.getDistancia() < a.getDistancia()){
+              posicao = arestas.indexOf(a);
+              break;
+              }
+              if(a!=geral && geral.getDistancia()> a.getDistancia() && arestas.indexOf(a)== (arestas.size()-1)){
+              posicao = arestas.size();
+              break;
+              }
+          }
+          if(posicao != 0){
+          arestas.add(posicao, geral);
+          }
+            
         }
         return arestas;
     }
 
-    public ArrayList<Aresta> kruskal() {
+    public Grafo kruskal() {
+
         ArrayList<Aresta> A = new ArrayList<Aresta>();
         A.addAll(ordenarAresta()); //organiza as arestas por tamanho
         int n = this.getLista_vertice().size();
         ArrayList<Aresta> arvore = new ArrayList<Aresta>();
-
-        int a = 1;
-        for (int b = 0; b < getLista_vertice().size(); b++) {
-            getLista_vertice().get(b).setGrupo(a);
-            a++;
-        }
-        int i = 0;
-        int comp_u;
-        int comp_v;
-        while ((arvore.size() < (n - 1)) && (!A.isEmpty())) {  // (n-1) = galhos
-            Vertice u = A.get(i).getV1();
-            Vertice v = A.get(i).getV2();
-
-            comp_u = u.getGrupo();   //grupo 1
-            comp_v = v.getGrupo();   //grupo 2
-
-            if (comp_u != comp_v) { //se os grupos forem diferentes, juntamos os componentes 
-                v.setGrupo(comp_u);
-                u.setGrupo(comp_u);
-                arvore.add(new Aresta(u, v, A.get(i).getDistancia()));
+        
+        Grafo grafo = new Grafo();
+        for(Aresta a: A){
+            if((grafo.buscaVertice(a.getV1().getNome())== null) && 
+                    (grafo.buscaVertice(a.getV2().getNome())== null)){
+                grafo.addVertice(a.getV1());
+                grafo.addVertice(a.getV2());
+                grafo.addAresta(a);
             }
-            i++;
+            if((grafo.buscaVertice(a.getV1().getNome())!= null) && 
+                    (grafo.buscaVertice(a.getV2().getNome())== null)){
+                grafo.addVertice(a.getV2());
+                grafo.addAresta(a);
+            }
+            if((grafo.buscaVertice(a.getV1().getNome())== null) && 
+                    (grafo.buscaVertice(a.getV2().getNome())!= null)){
+                grafo.addVertice(a.getV1());              
+                grafo.addAresta(a);
+            }
         }
-        return arvore;
+        while(!grafo.grafoConexo()){
+        Aresta aresta = grafo.completaGrafo(getLista_aresta());
+        grafo.addAresta(aresta);
+        }
+       return grafo;
     }
 
     public String imprimeArvore() {
-        String arvore = "graph {\n";
-        for (Aresta a : kruskal()) {
-            if (a != null) {
-                arvore += " " + a.getV1().getNome() + " -- "
-                        + a.getV2().getNome() + "[label = \"" + a.getDistancia() + "\"];\n";
-            }
-        }
-        return arvore + "}";
+        Grafo grafo = kruskal();
+        return grafo.dotSimplesValorado();
     }
 
     public ArrayList<Vertice> buscaVerticesAdjacentes(Vertice v) {
@@ -465,6 +473,11 @@ public class Grafo {
                 buscaProfundidade(vertice);
             }
         }
+    }
+
+    private Aresta completaGrafo(ArrayList<Aresta> lista_aresta) {
+       Aresta referencia = null;
+       double distancia = Double.POSITIVE_INFINITY;
     }
 
 }
