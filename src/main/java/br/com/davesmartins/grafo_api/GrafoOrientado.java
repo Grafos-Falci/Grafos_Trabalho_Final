@@ -11,6 +11,9 @@ public class GrafoOrientado extends Grafo {
 
         String DOT;
         DOT = "digraph{\n";
+        for (Vertice vertice : lista_vertice) {
+            DOT = DOT + vertice.getNome() + ";\n";
+        }
         for (Aresta aresta : lista_aresta) {
             DOT = DOT + aresta.getV1().getNome() + " -> " + aresta.getV2().getNome() + ";\n";
         }
@@ -166,7 +169,7 @@ public class GrafoOrientado extends Grafo {
         return dot;
     }
 
-    public void malgrange() throws IOException {
+    public void malgrange(){
         ArrayList<Vertice> intersecao = new ArrayList<Vertice>();
         ArrayList<Vertice> copia = new ArrayList<Vertice>();
 
@@ -192,7 +195,7 @@ public class GrafoOrientado extends Grafo {
         removeArestaRepetida();
     }
 
-    public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao) throws IOException {
+    public ArrayList<Vertice> recriaVertices(ArrayList<Vertice> intersecao){
 
         ArrayList<Aresta> copia = new ArrayList<Aresta>();
         copia.addAll(lista_aresta);
