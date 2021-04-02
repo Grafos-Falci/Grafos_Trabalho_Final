@@ -14,12 +14,13 @@ public class TesteMenu {
 
         int op = 0;
 
-        while (op != 4) {
+        while (op != 5) {
             System.out.println("---------------MENU---------------");
             System.out.println("1 - Montar Grafo");
             System.out.println("2 - Ler/Gravar Arquivo");
-            System.out.println("3 - Mostrar Dados do Grafo");
-            System.out.println("4 - Sair");
+            System.out.println("3 - Mostrar operacoes com o grafo");
+            System.out.println("4 - Mostrar dados do grafo");
+            System.out.println("5 - Sair");
             op = leitor.nextInt();
 
             Aresta a;
@@ -223,37 +224,13 @@ public class TesteMenu {
                         op3 = leitor.nextInt();
 
                         switch (op3) {
-                            case 1:
-                                System.out.println("Ordem: " + grafo.Ordem());
-                                break;
+
                             case 2:
                                 System.out.println("Informe o vertice: ");
                                 String v = leitor.next();
                                 System.out.println("Grau: " + grafo.Grau(v));
                                 break;
-                            case 3:
-                                grafo.matrizAdjacencia();
-                                break;
-                            case 4:
-                                System.out.println(grafo.dotSimples());
-                                break;
-                            case 5:
-                                System.out.println(grafoOrientado.dotOrientado());
-                                break;
-                            case 6:
-                                if (grafo.grafoRegular()) {
-                                    System.out.println("Regular");
-                                } else {
-                                    System.out.println("Nao Regular");
-                                }
-                                break;
-                            case 7:
-                                if (grafoOrientado.Grafo_completo()) {
-                                    System.out.println("Completo");
-                                } else {
-                                    System.out.println("Nao Completo");
-                                }
-                                break;
+
                             case 8:
                                 System.out.println("Fecho Transitivo Direto(Informe o Vertice): ");
                                 v1 = leitor.next();
@@ -265,13 +242,7 @@ public class TesteMenu {
                                 v1 = leitor.next();
                                 grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1));
                                 break;
-                            case 10:
-                                if (grafoOrientado.grafoConexo()) {
-                                    System.out.println("Conexo");
-                                } else {
-                                    System.out.println("Nao Conexo");
-                                }
-                                break;
+
                             case 11:
                                 System.out.println("Informe o vertice de origem");
                                 v1 = leitor.next();
@@ -294,14 +265,6 @@ public class TesteMenu {
                                 Graph.createStringDotToPng(grafo.Dijikstra(grafo.buscaVertice(v1), grafo.buscaVertice(v2)), "naoOrientadoDistancia.png");
                                 break;
 
-                            case 13:
-                                Graph.createStringDotToPng(grafo.imprimeArvore(), "Arvorekruskal.png");
-                                break;
-                                
-                            case 14:
-                                grafoOrientado.malgrange();
-                                Graph.createStringDotToPng(grafoOrientado.dotOrientado(), "grafoReduzido.png");
-                                break;
                             case 15:
                                 System.out.println("Informe um vertice para comecar: ");
                                 v1 = leitor.next();
@@ -327,8 +290,52 @@ public class TesteMenu {
                     break;
 
                 case 4:
-                    System.exit(0);
+                    int op4 = 0;
 
+                    while (op4 != 3) {
+                        System.out.println("1 - Mostrar dados dos grafo inserido (Simples)");
+                        System.out.println("2 - Mostrar dados dos grafo inserido (Orientado)");
+                        System.out.println("3 - Sair");
+                        op4 = leitor.nextInt();
+
+                        switch (op4) {
+                            case 1:
+                                System.out.println("Ordem: " + grafo.Ordem());
+                                System.out.println("Imagem DOT simples criada!");
+                               
+                                if (grafo.grafoRegular()) {
+                                    System.out.println("Grafo Regular!");
+                                } else {
+                                    System.out.println("Grafo nao Regular!");
+                                }
+
+                                if (grafo.Grafo_completo()) {
+                                    System.out.println("Grafo Completo!");
+                                } else {
+                                    System.out.println("Grafo nao Completo!");
+                                }
+                                if (grafo.testeConexa()) {
+                                    System.out.println("Grafo Conexo!");
+                                } else {
+                                    System.out.println("Grafo nao Conexo!");
+                                }
+
+                                System.out.println("Imagem de Arvore gerada!");
+                                Graph.createStringDotToPng(grafo.imprimeArvore(), "arvoreKruskal.png");
+                                
+                                 Graph.createStringDotToPng(grafo.dotSimples(), "imagemDOTSimples");
+                                 Graph.createStringDotToPng(grafo.dotSimplesValorado(), "imagemDOTSimplesValorado");
+                                
+
+                            case 2:
+                                break;
+                        }
+                    }
+                    break;
+
+                case 5:
+                    System.exit(0);
+                    break;
             }
         }
 

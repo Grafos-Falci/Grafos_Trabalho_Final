@@ -16,6 +16,9 @@ public class TesteSemMenu {
         Vertice d = new Vertice("d");
         Vertice e = new Vertice("e");
         Vertice f = new Vertice("f");
+        Vertice g = new Vertice("g");
+        Vertice h = new Vertice("h");
+        Vertice i = new Vertice("i");
 
         grafo.addVertice(a);
         grafo.addVertice(b);
@@ -23,24 +26,40 @@ public class TesteSemMenu {
         grafo.addVertice(d);
         grafo.addVertice(e);
         grafo.addVertice(f);
+        grafo.addVertice(g);
+        grafo.addVertice(h);
+        grafo.addVertice(i);
 
         Aresta a1 = new Aresta(a, b, 1);
-        Aresta a2 = new Aresta(d, a, 8);
-        Aresta a3 = new Aresta(b, e, 9);
-        Aresta a4 = new Aresta(e, d, 1);
-        Aresta a5 = new Aresta(e, f, 5);
-  
+        Aresta a2 = new Aresta(a, d, 4);
+        Aresta a3 = new Aresta(b, d, 6);
+        Aresta a4 = new Aresta(d, e, 3);
+        Aresta a5 = new Aresta(b, c, 2);
+        Aresta a6 = new Aresta(e, c, 5);
+        Aresta a7 = new Aresta(e, f, 8);
+        Aresta a8 = new Aresta(c, f, 6);
+        Aresta a9 = new Aresta(f, g, 3);
+        Aresta a10 = new Aresta(g, e, 7);
+        Aresta a11 = new Aresta(d, g, 4);
+
         grafo.addAresta(a1);
         grafo.addAresta(a2);
         grafo.addAresta(a3);
         grafo.addAresta(a4);
         grafo.addAresta(a5);
+        grafo.addAresta(a6);
+        grafo.addAresta(a7);
+        grafo.addAresta(a8);
+        grafo.addAresta(a9);
+        grafo.addAresta(a10);
+        grafo.addAresta(a11);
 
-//        Graph.createStringDotToPng(grafo.imprimeArvore(), "rennantree");
-            
-            System.out.println(grafo.imprimeArvore());
-            Graph.createStringDotToPng(grafo.imprimeArvore(), "newtree");
- 
+//        Graph.createStringDotToPng(grafo.dotSimples(), "dotSimples");
+//        Graph.createStringDotToPng(grafo.dotSimplesValorado(), "dotSimplesValorado");
+//        Graph.createStringDotToPng(grafo.imprimeArvore(), "newtree");
+
+            System.out.println(grafo.Grafo_completo());
+
 
     }
 }

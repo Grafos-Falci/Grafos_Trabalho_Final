@@ -132,6 +132,9 @@ public class Grafo {
     public String dotSimples() { // grafo em dot
         String DOT;
         DOT = "graph{\n";
+        for (Vertice vertice : lista_vertice) {
+            DOT = DOT + vertice.getNome() + ";\n";
+        }
         for (Aresta aresta : lista_aresta) {
             DOT = DOT + aresta.getV1().getNome() + " -- " + aresta.getV2().getNome() + ";\n";
         }
@@ -142,6 +145,9 @@ public class Grafo {
     public String dotSimplesValorado() { // grafo em dot
         String DOT;
         DOT = "graph{\n";
+        for (Vertice vertice : lista_vertice) {
+            DOT = DOT + vertice.getNome() + ";\n";
+        }
         for (Aresta aresta : lista_aresta) {
             DOT = DOT + aresta.getV1().getNome() + " -- " + aresta.getV2().getNome() + "[label = \"" + aresta.getDistancia() + "\"];\n";
 
@@ -222,50 +228,6 @@ public class Grafo {
         } else {
             return false;
         }
-    }
-
-    public boolean grafoConexo() { //verifica se o grafo é conexo
-        controle_vertice.removeAll(controle_vertice);
-        ArrayList<Vertice> vertice = listaVerticesConectados(lista_vertice.get(0));
-        vertice = new ArrayList<Vertice>(new HashSet<Vertice>(vertice)); //hashset impede vertices repetios 
-        for (Vertice v : vertice) {
-            System.out.println("Tamanho " + v.getNome());
-        }
-
-        if (vertice.size() == lista_vertice.size()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public ArrayList<Vertice> listaVerticesConectados(Vertice v) {
-        ArrayList<Aresta> aresta = buscaAresta(v);
-        ArrayList<Vertice> vertice = new ArrayList<Vertice>();
-        if (aresta.size() == 0) {
-            return vertice;
-        }
-        vertice.add(v);
-        controle_vertice.add(v);
-        for (Aresta a : aresta) {
-            if ((a.getV1() == v) && (a.getV2() == v)) {
-
-            } else {
-                if (a.getV1() == v) {
-                    if (!(controle_vertice.contains(a.getV2()))) {
-                        vertice.add(a.getV2());
-                        vertice.addAll(listaVerticesConectados(a.getV2())); //recursividade (chama a própria função)
-                    } else {
-                        if (!(controle_vertice.contains(a.getV1()))) {
-                            vertice.add(a.getV1());
-                            vertice.addAll(listaVerticesConectados(a.getV1()));
-                        }
-                    }
-                }
-            }
-
-        }
-        return vertice;
     }
 
     public ArrayList<Aresta> buscaAresta(Vertice v) { // retorna a lista de arestas de um vertice
@@ -422,9 +384,9 @@ public class Grafo {
             Aresta aresta = grafo.completaGrafo(getLista_aresta());
 
             if (aresta == null) {
-                System.out.println("ok");
+
             } else {
-                System.out.println("Entrou no else");
+
                 grafo.addAresta(aresta);
             }
             grafo.testeConexa();
@@ -432,64 +394,6 @@ public class Grafo {
         }
         return grafo;
     }
-
-    public String imprimeArvore() {
-        Grafo arvore = kruskal();
-        return arvore.dotSimplesValorado();
-    }
-
-    public ArrayList<Vertice> buscaVerticesAdjacentes(Vertice v) {
-        ArrayList<Aresta> aresta = buscaAresta(v);
-        ArrayList<Vertice> vertice = new ArrayList<Vertice>();
-
-        for (Aresta a : aresta) {
-            if (a.getV1() == v) {
-                vertice.add(a.getV2());
-            }
-            if (a.getV2() == v) {
-                vertice.add(a.getV1());
-            }
-        }
-        return vertice;
-    }
-
-    public void buscaLargura(Vertice inicio) {
-        ArrayList<Vertice> fila = new ArrayList<Vertice>();
-        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
-
-        Vertice aux;
-        Vertice i = inicio;
-        fila.add(i);
-        visitados.add(i);
-
-        while (!fila.isEmpty()) {
-            visitados.add(i);
-            System.out.print("\n" + i.getNome() + " -> ");
-            for (Vertice v : buscaVerticesAdjacentes(i)) {
-                System.out.print(v.getNome() + " | ");
-                aux = v;
-                if (!visitados.contains(aux)) {
-                    fila.add(aux);
-                    visitados.add(aux);
-                }
-            }
-            fila.remove(i);
-            if (!fila.isEmpty()) {
-                i = fila.get(0);
-            }
-        }
-    }
-
-    public void buscaProfundidade(Vertice v) {
-        v.setVisitado(true);
-        System.out.print("[" + v.getNome() + "]");
-        for (Vertice vertice : buscaVerticesAdjacentes(v)) {
-            if (vertice.isVisitado() == false) {
-                buscaProfundidade(vertice);
-            }
-        }
-    }
-
     private Aresta completaGrafo(ArrayList<Aresta> lista_aresta) {
 
         Aresta referencia = null;
@@ -581,4 +485,63 @@ public class Grafo {
         }
         return listaVertice;
     }
+
+    public String imprimeArvore() {
+        Grafo arvore = kruskal();
+        return arvore.dotSimplesValorado();
+    }
+
+    public ArrayList<Vertice> buscaVerticesAdjacentes(Vertice v) {
+        ArrayList<Aresta> aresta = buscaAresta(v);
+        ArrayList<Vertice> vertice = new ArrayList<Vertice>();
+
+        for (Aresta a : aresta) {
+            if (a.getV1() == v) {
+                vertice.add(a.getV2());
+            }
+            if (a.getV2() == v) {
+                vertice.add(a.getV1());
+            }
+        }
+        return vertice;
+    }
+
+    public void buscaLargura(Vertice inicio) {
+        ArrayList<Vertice> fila = new ArrayList<Vertice>();
+        ArrayList<Vertice> visitados = new ArrayList<Vertice>();
+
+        Vertice aux;
+        Vertice i = inicio;
+        fila.add(i);
+        visitados.add(i);
+
+        while (!fila.isEmpty()) {
+            visitados.add(i);
+            System.out.print("\n" + i.getNome() + " -> ");
+            for (Vertice v : buscaVerticesAdjacentes(i)) {
+                System.out.print(v.getNome() + " | ");
+                aux = v;
+                if (!visitados.contains(aux)) {
+                    fila.add(aux);
+                    visitados.add(aux);
+                }
+            }
+            fila.remove(i);
+            if (!fila.isEmpty()) {
+                i = fila.get(0);
+            }
+        }
+    }
+
+    public void buscaProfundidade(Vertice v) {
+        v.setVisitado(true);
+        System.out.print("[" + v.getNome() + "]");
+        for (Vertice vertice : buscaVerticesAdjacentes(v)) {
+            if (vertice.isVisitado() == false) {
+                buscaProfundidade(vertice);
+            }
+        }
+    }
+
+    
 }
