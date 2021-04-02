@@ -216,7 +216,7 @@ public class Grafo {
         int numArestas = (Ordem() * (Ordem() - 1) / 2);
         if (this.lista_aresta.size() == numArestas) {
             return true;
-        } else {    
+        } else {
             return false;
         }
     }
@@ -384,7 +384,6 @@ public class Grafo {
             getLista_vertice().get(b).setGrupo(a);
             a++;
         }
-
         int i = 0;
         int comp_u;
         int comp_v;

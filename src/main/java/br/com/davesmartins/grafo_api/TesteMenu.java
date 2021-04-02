@@ -310,17 +310,17 @@ public class TesteMenu {
                             case 16:
                                 System.out.println("Informe um vertice para comecar: ");
                                 v1 = leitor.next();
-                                grafo.buscaProfundidade(grafo.buscaVertice(v1));
+                                grafoOrientado.buscaProfundidadeOrientado(grafoOrientado.buscaVertice(v1));
                                 break;
                             case 17:
                                 System.out.println("Informe um vertice para comecar: ");
                                 v1 = leitor.next();
-                                grafoOrientado.buscaProfundidadeOrientado(grafo.buscaVertice(v1));
+                                grafo.buscaLargura(grafo.buscaVertice(v1));
                                 break;
                             case 18:
                                 System.out.println("Informe um vertice para comecar: ");
                                 v1 = leitor.next();
-                                grafoOrientado.buscaProfundidadeOrientado(grafo.buscaVertice(v1));
+                                grafoOrientado.buscaLarguraOrientado(grafoOrientado.buscaVertice(v1));
                                 break;
                         }
                     }
