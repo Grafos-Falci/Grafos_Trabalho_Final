@@ -42,7 +42,6 @@ public class TesteMenu {
                         op1 = leitor.nextInt();
 
                         switch (op1) {
-
                             case 1:
                                 int op11 = 0;
                                 while (op11 != 4) {
@@ -130,14 +129,11 @@ public class TesteMenu {
                                             grafoOrientado.inserirArestaValorada(v1, v2, valor);
                                             break;
                                     }
-
                                 }
-
                                 break;
                             case 3:
                                 break;
                         }
-
                     }
                     break;
 
@@ -278,16 +274,23 @@ public class TesteMenu {
                                         case 2:
                                             System.out.println("Fecho Transitivo Direto(Informe o Vertice): ");
                                             v1 = leitor.next();
-                                             for(Vertice direto :grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1))){
-                                                System.out.print("["+direto.getNome()+"]");
+                                            if (!grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1)).isEmpty()) {
+                                                for (Vertice direto : grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1))) {
+                                                    System.out.print("[" + direto.getNome() + "]");
+                                                }
+                                            } else {
+                                                System.out.println("Sem vertices transitivos diretos");
                                             }
-                                            
                                             break;
                                         case 3:
                                             System.out.println("Fecho Transitivo Inverso(Informe o Vertice): ");
                                             v1 = leitor.next();
-                                            for(Vertice inverso :grafoOrientado.buscaTI(grafoOrientado.buscaVertice(v1))){
-                                                System.out.print("["+inverso.getNome()+"]");
+                                            if (!grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1)).isEmpty()) {
+                                                for (Vertice inverso : grafoOrientado.buscaTI(grafoOrientado.buscaVertice(v1))) {
+                                                    System.out.print("[" + inverso.getNome() + "]");
+                                                }
+                                            } else {
+                                                System.out.println("Sem vertices transitivos inverso");
                                             }
                                             break;
                                         case 4:
@@ -304,15 +307,18 @@ public class TesteMenu {
                                             System.out.println("Informe um vertice para comecar: ");
                                             v1 = leitor.next();
                                             grafoOrientado.buscaProfundidadeOrientado(grafoOrientado.buscaVertice(v1));
-                                            System.out.println("");
+                                            System.out.println(" ");
                                             break;
                                         case 6:
                                             System.out.println("Informe um vertice para comecar: ");
                                             v1 = leitor.next();
                                             grafoOrientado.buscaLarguraOrientado(grafoOrientado.buscaVertice(v1));
-                                            System.out.println("");
+                                            System.out.println(" ");
                                             break;
                                         case 7:
+                                            System.out.println("Imagem do Grafo reduzida criada criada!(malgrange)");
+                                            grafoOrientado.malgrange();
+                                            Graph.createStringDotToPng(grafoOrientado.dotOrientado(), "grafoReduzido.png");
                                             break;
                                     }
 
