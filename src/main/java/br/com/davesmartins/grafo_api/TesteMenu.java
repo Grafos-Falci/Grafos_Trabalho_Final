@@ -263,9 +263,9 @@ public class TesteMenu {
                                     System.out.println("2 - Mostrar Fecho Transitivo Direto");
                                     System.out.println("3 - Mostrar Fecho Transitivo Inverso");
                                     System.out.println("4 - Gerar menor caminho (orientado)");
-                                    System.out.println("5 - Gerar Grafo reduzido Malgrange (O grafo sera alterado!)");
-                                    System.out.println("6 - Buscar profundiade do grafo(orientado)");
-                                    System.out.println("7 - Buscar largura do grafo(orientado)");
+                                    System.out.println("5 - Buscar profundiade do grafo(orientado)");
+                                    System.out.println("6 - Buscar largura do grafo(orientado)");
+                                    System.out.println("7 - Gerar Grafo reduzido Malgrange (O grafo sera alterado permanentemente!)");
                                     System.out.println("8 - Sair");
                                     op32 = leitor.nextInt();
 
@@ -273,17 +273,40 @@ public class TesteMenu {
                                         case 1:
                                             System.out.println("Informe o vertice: ");
                                             String v = leitor.next();
-                                            System.out.print("Grau = " + grafo.Grau(v));
+                                            System.out.print("Grau = " + grafoOrientado.Grau(v));
                                             break;
                                         case 2:
+                                            System.out.println("Fecho Transitivo Direto(Informe o Vertice): ");
+                                            v1 = leitor.next();
+                                            Vertice vertice_ftd = new Vertice(v1);
+                                            grafoOrientado.buscaTD(vertice_ftd);
                                             break;
                                         case 3:
+                                            System.out.println("Fecho Transitivo Inverso(Informe o Vertice): ");
+                                            v1 = leitor.next();
+                                            grafoOrientado.buscaTD(grafoOrientado.buscaVertice(v1));
                                             break;
                                         case 4:
+                                            System.out.println("Informe o vertice de origem");
+                                            v1 = leitor.next();
+
+                                            System.out.println("Informe o vertice de destino");
+                                            v2 = leitor.next();
+
+                                            System.out.println("Imagem do menor caminho Gerada!");
+                                            Graph.createStringDotToPng(grafoOrientado.Dijikstra(grafoOrientado.buscaVertice(v1), grafoOrientado.buscaVertice(v2)), "orientadoMenorCaminho.png");
                                             break;
                                         case 5:
+                                            System.out.println("Informe um vertice para comecar: ");
+                                            v1 = leitor.next();
+                                            grafoOrientado.buscaProfundidadeOrientado(grafoOrientado.buscaVertice(v1));
+                                            System.out.println("");
                                             break;
                                         case 6:
+                                            System.out.println("Informe um vertice para comecar: ");
+                                            v1 = leitor.next();
+                                            grafoOrientado.buscaLarguraOrientado(grafoOrientado.buscaVertice(v1));
+                                            System.out.println("");
                                             break;
                                         case 7:
                                             break;
