@@ -365,22 +365,22 @@ public class Grafo {
     public ArrayList<Aresta> ordenarAresta() {
         ArrayList<Aresta> arestas = new ArrayList<Aresta>();
         arestas.add(getLista_aresta().get(0));
-        for (Aresta geral: getLista_aresta()) {
-          int posicao=0;
-          for(Aresta a: arestas){
-              if(geral.getDistancia() < a.getDistancia()){
-              posicao = arestas.indexOf(a);
-              break;
-              }
-              if(a!=geral && geral.getDistancia()> a.getDistancia() && arestas.indexOf(a)== (arestas.size()-1)){
-              posicao = arestas.size();
-              break;
-              }
-          }
-          if(posicao != 0){
-          arestas.add(posicao, geral);
-          }
-            
+        for (Aresta geral : getLista_aresta()) {
+            int posicao = 0;
+            for (Aresta a : arestas) {
+                if (geral.getDistancia() < a.getDistancia()) {
+                    posicao = arestas.indexOf(a);
+                    break;
+                }
+                if (a != geral && geral.getDistancia() > a.getDistancia() && arestas.indexOf(a) == (arestas.size() - 1)) {
+                    posicao = arestas.size();
+                    break;
+                }
+            }
+            if (posicao != 0) {
+                arestas.add(posicao, geral);
+            }
+
         }
         return arestas;
     }
@@ -391,31 +391,31 @@ public class Grafo {
         A.addAll(ordenarAresta()); //organiza as arestas por tamanho
         int n = this.getLista_vertice().size();
         ArrayList<Aresta> arvore = new ArrayList<Aresta>();
-        
+
         Grafo grafo = new Grafo();
-        for(Aresta a: A){
-            if((grafo.buscaVertice(a.getV1().getNome())== null) && 
-                    (grafo.buscaVertice(a.getV2().getNome())== null)){
+        for (Aresta a : A) {
+            if ((grafo.buscaVertice(a.getV1().getNome()) == null)
+                    && (grafo.buscaVertice(a.getV2().getNome()) == null)) {
                 grafo.addVertice(a.getV1());
                 grafo.addVertice(a.getV2());
                 grafo.addAresta(a);
             }
-            if((grafo.buscaVertice(a.getV1().getNome())!= null) && 
-                    (grafo.buscaVertice(a.getV2().getNome())== null)){
+            if ((grafo.buscaVertice(a.getV1().getNome()) != null)
+                    && (grafo.buscaVertice(a.getV2().getNome()) == null)) {
                 grafo.addVertice(a.getV2());
                 grafo.addAresta(a);
             }
-            if((grafo.buscaVertice(a.getV1().getNome())== null) && 
-                    (grafo.buscaVertice(a.getV2().getNome())!= null)){
-                grafo.addVertice(a.getV1());              
+            if ((grafo.buscaVertice(a.getV1().getNome()) == null)
+                    && (grafo.buscaVertice(a.getV2().getNome()) != null)) {
+                grafo.addVertice(a.getV1());
                 grafo.addAresta(a);
             }
         }
-        while(!grafo.grafoConexo()){
-        Aresta aresta = grafo.completaGrafo(getLista_aresta());
-        grafo.addAresta(aresta);
+        while (!grafo.grafoConexo()) {
+            Aresta aresta = grafo.completaGrafo(getLista_aresta());
+            grafo.addAresta(aresta);
         }
-       return grafo;
+        return grafo;
     }
 
     public String imprimeArvore() {
@@ -476,8 +476,27 @@ public class Grafo {
     }
 
     private Aresta completaGrafo(ArrayList<Aresta> lista_aresta) {
-       Aresta referencia = null;
-       double distancia = Double.POSITIVE_INFINITY;
+        Aresta referencia = null;
+        double distancia = Double.POSITIVE_INFINITY;
+        for (Vertice vertice : this.getLista_vertice()) {
+            for (Vertice v : this.getLista_vertice()) {
+                if (v == vertice) {
+                    break;
+                }
+                controle_vertice.removeAll(controle_vertice);
+                if (!encontrarVertice(v).contains(vertice)) {
+                }
+            }
+        }
+    }
+
+    private ArrayList<Vertice> encontrarVertice(Vertice v) {
+        ArrayList<Vertice> listaVertices = new ArrayList<Vertice>(); 
+        for (Aresta aresta : buscaAresta(v)) {
+            if(aresta.getV1() == v){
+            
+            }
+        }
     }
 
 }
